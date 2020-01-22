@@ -1,5 +1,4 @@
-import 'package:carros/pages/home_page.dart';
-import 'package:carros/util/nav.dart';
+import 'package:carros/api/login_api.dart';
 import 'package:carros/widgets/app_button.dart';
 import 'package:carros/widgets/app_text.dart';
 import 'package:flutter/cupertino.dart';
@@ -73,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void _onClickLogin(context) {
+  void _onClickLogin(context) async {
     if (!this._formKey.currentState.validate()) {
       return;
     }
@@ -83,7 +82,8 @@ class _LoginPageState extends State<LoginPage> {
 
     print(" Login: $login Senha: $senha");
 
-    push(context, HomePage());
+    bool ok = await LoginApi.login(login, senha);
+    print(ok);
   }
 
   String _validateLogin(String text) {

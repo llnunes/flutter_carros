@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AppText extends StatelessWidget {
   String label;
@@ -26,6 +27,7 @@ class AppText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      maxLength: 255,
       controller: controller,
       validator: validator,
       keyboardType: keyboardType,
@@ -38,6 +40,9 @@ class AppText extends StatelessWidget {
         fontSize: 25,
       ),
       obscureText: password,
+      inputFormatters: [
+        BlacklistingTextInputFormatter(RegExp("[ ]"))
+      ],
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
