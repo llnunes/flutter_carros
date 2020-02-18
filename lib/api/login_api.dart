@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:carros/api/api_response.dart';
 import 'package:carros/model/usuario.dart';
+import 'package:carros/util/prefs.dart';
 import 'package:http/http.dart' as http;
 
 class LoginApi {
@@ -29,6 +30,11 @@ class LoginApi {
       if(response.statusCode == 200) {
         final user = new Usuario.fromJson(mapResponse);
 
+        user.save();
+
+        Usuario user2 = await Usuario.get();
+        print("user 2: $user2");
+        
         return ApiResponse.ok(user);
       } else {
         return ApiResponse.error(mapResponse["error"]);

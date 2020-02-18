@@ -28,6 +28,16 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
+
+    Future<Usuario> future = Usuario.get();
+    future.then((Usuario usuario) {
+      if(usuario != null) {
+        push(context, HomePage(), replace: true);
+        //setState(() {
+        //  _tLogin.text = usuario.login;
+        //});
+      }
+    });
   }
 
   @override
@@ -102,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
     if (response.ok) {
       Usuario user = response.result;
       print(">>> $user");
-      push(context, HomePage(user.nome), replace: true);
+      push(context, HomePage(), replace: true);
     } else {
       alert(context, "Carros", response.msg);
       print(response.msg);
