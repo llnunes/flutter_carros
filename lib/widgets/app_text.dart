@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class AppText extends StatelessWidget {
-  String label;
-  String hint;
-  bool password;
-  TextEditingController controller;
-  FormFieldValidator<String> validator;
-  TextInputType keyboardType;
-  TextInputAction textInputAction;
-  FocusNode focusNode;
-  FocusNode nextFocus;
+  final String label;
+  final String hint;
+  final bool password;
+  final TextEditingController controller;
+  final FormFieldValidator<String> validator;
+  final TextInputType keyboardType;
+  final TextInputAction textInputAction;
+  final FocusNode focusNode;
+  final FocusNode nextFocus;
 
   AppText(
     this.label,

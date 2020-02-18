@@ -28,6 +28,6 @@ class CarrosApi {
 
     List mapResponse = convert.json.decode(json);
 
-    return mapResponse.map<Carro>((map) => Carro.fromJson(map)).toList();;
+    return mapResponse.map<Carro>((map) => Carro.fromJson(map)).toList();
   }
 }

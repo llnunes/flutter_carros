@@ -3,7 +3,7 @@ import 'package:carros/model/carro.dart';
 import 'package:flutter/material.dart';
 
 class CarrosListView extends StatefulWidget {
-  String parametro;
+  final String parametro;
 
   CarrosListView(this.parametro);
 
