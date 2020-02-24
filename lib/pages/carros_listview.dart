@@ -1,15 +1,15 @@
-import 'dart:async';
 
-import 'package:carros/api/carros_api.dart';
+import 'package:carros/bloc/CarroBloc.dart';
 import 'package:carros/model/carro.dart';
 import 'package:carros/pages/carro_page.dart';
 import 'package:carros/util/nav.dart';
+import 'package:carros/widgets/text_error.dart';
 import 'package:flutter/material.dart';
 
 class CarrosListView extends StatefulWidget {
-  final String parametro;
+  final String tipo;
 
-  CarrosListView(this.parametro);
+  CarrosListView(this.tipo);
 
   @override
   _CarrosListViewState createState() => _CarrosListViewState();
@@ -18,7 +18,9 @@ class CarrosListView extends StatefulWidget {
 class _CarrosListViewState extends State<CarrosListView> with AutomaticKeepAliveClientMixin<CarrosListView>{
   List<Carro> carros;
 
-  final _streamController = new StreamController<List<Carro>>();
+  String get tipo => widget.tipo;
+
+  final _bloc = CarroBloc();
 
   @override
   bool get wantKeepAlive => true;
@@ -27,29 +29,18 @@ class _CarrosListViewState extends State<CarrosListView> with AutomaticKeepAlive
   void initState() {
     // TODO: implement initState
     super.initState();
-    _loadData();
-  }
-
-  _loadData() async {
-    List<Carro> carros = await CarrosApi.getCarros(widget.parametro);
-    _streamController.add(carros);
+    _bloc.fetch(tipo);
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
 
-
     return StreamBuilder(
-      stream: _streamController.stream,
+      stream: _bloc.stream,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          return Center(
-            child: Text(
-              "Não foi possivel recuperar os carros",
-              style: TextStyle(color: Colors.red, fontSize: 25),
-            ),
-          );
+          return TextError("Não foi possivel recuperar os carros");
         }
         if (!snapshot.hasData) {
           return Center(
@@ -128,8 +119,7 @@ class _CarrosListViewState extends State<CarrosListView> with AutomaticKeepAlive
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
-    _streamController.close();
+    _bloc.dispose();
   }
 }
