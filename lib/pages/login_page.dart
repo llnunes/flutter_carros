@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:carros/api/api_response.dart';
 import 'package:carros/bloc/LoginBloc.dart';
 import 'package:carros/model/usuario.dart';
@@ -30,16 +28,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-
-    Future<Usuario> future = Usuario.get();
-    future.then((Usuario usuario) {
-      if(usuario != null) {
-        push(context, HomePage(), replace: true);
-        //setState(() {
-        //  _tLogin.text = usuario.login;
-        //});
-      }
-    });
   }
 
   @override

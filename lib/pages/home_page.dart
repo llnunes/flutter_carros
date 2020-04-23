@@ -1,5 +1,6 @@
 import 'package:carros/drawer_list.dart';
 import 'package:carros/pages/carros_page.dart';
+import 'package:carros/pages/favorito_page.dart';
 import 'package:carros/util/prefs.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class _HomePageState extends State<HomePage>
 
     // Depois cria o TabController
     // No método build na primeira vez ele poderá estar nulo
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
 
     // Agora que temos o TabController e o índice da tab,
     // chama o setState para redesenhar a tela
@@ -50,9 +51,10 @@ class _HomePageState extends State<HomePage>
             : TabBar(
                 controller: _tabController,
                 tabs: <Widget>[
-                  Tab(text: "Classicos"),
-                  Tab(text: "Esportivos"),
-                  Tab(text: "Luxo"),
+                  Tab(text: "Classicos", icon: Icon(Icons.directions_car),),
+                  Tab(text: "Esportivos", icon: Icon(Icons.directions_car),),
+                  Tab(text: "Luxo", icon: Icon(Icons.directions_car),),
+                  Tab(text: "Favoritos", icon: Icon(Icons.favorite),),
                 ],
               ),
       ),
@@ -64,6 +66,7 @@ class _HomePageState extends State<HomePage>
               CarrosPage("/tipo/classicos"),
               CarrosPage("/tipo/esportivos"),
               CarrosPage("/tipo/luxo"),
+              FavoritosPage()
             ]),
       drawer: DrawerList(),
     );

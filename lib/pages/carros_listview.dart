@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carros/model/carro.dart';
 import 'package:carros/pages/carro_page.dart';
 import 'package:carros/util/nav.dart';
@@ -24,7 +25,8 @@ class CarrosListView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Center(
-                    child: Image.network(
+                    child: CachedNetworkImage(
+                      imageUrl:
                       c.urlFoto ??
                           "http://www.livroandroid.com.br/livro/carros/classicos/Dodge_Challenger.png",
                       width: 250,
