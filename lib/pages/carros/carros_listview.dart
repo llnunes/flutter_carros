@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carros/model/carro.dart';
-import 'package:carros/pages/carro_page.dart';
+import 'package:carros/pages/carros/carro_page.dart';
 import 'package:carros/util/nav.dart';
 import 'package:flutter/material.dart';
 

@@ -1,7 +1,6 @@
-import 'package:carros/bloc/CarroBloc.dart';
 import 'package:carros/bloc/FavoritosBloc.dart';
 import 'package:carros/model/carro.dart';
-import 'package:carros/pages/carros_listview.dart';
+import 'package:carros/pages/carros/carros_listview.dart';
 import 'package:carros/widgets/text_error.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +11,6 @@ class FavoritosPage extends StatefulWidget {
 
 class _FavoritosPageState extends State<FavoritosPage>
     with AutomaticKeepAliveClientMixin<FavoritosPage> {
-
   final _bloc = FavoritosBloc();
 
   @override
@@ -58,5 +56,4 @@ class _FavoritosPageState extends State<FavoritosPage>
     super.dispose();
     _bloc.dispose();
   }
-
 }

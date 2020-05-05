@@ -1,12 +1,13 @@
 import 'package:carros/drawer_list.dart';
-import 'package:carros/pages/carros_page.dart';
+import 'package:carros/pages/carros/carros_form_page.dart';
+import 'package:carros/pages/carros/carros_page.dart';
 import 'package:carros/pages/favorito_page.dart';
+import 'package:carros/util/nav.dart';
 import 'package:carros/util/prefs.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -51,10 +52,22 @@ class _HomePageState extends State<HomePage>
             : TabBar(
                 controller: _tabController,
                 tabs: <Widget>[
-                  Tab(text: "Classicos", icon: Icon(Icons.directions_car),),
-                  Tab(text: "Esportivos", icon: Icon(Icons.directions_car),),
-                  Tab(text: "Luxo", icon: Icon(Icons.directions_car),),
-                  Tab(text: "Favoritos", icon: Icon(Icons.favorite),),
+                  Tab(
+                    text: "Classicos",
+                    icon: Icon(Icons.directions_car),
+                  ),
+                  Tab(
+                    text: "Esportivos",
+                    icon: Icon(Icons.directions_car),
+                  ),
+                  Tab(
+                    text: "Luxo",
+                    icon: Icon(Icons.directions_car),
+                  ),
+                  Tab(
+                    text: "Favoritos",
+                    icon: Icon(Icons.favorite),
+                  ),
                 ],
               ),
       ),
@@ -69,6 +82,14 @@ class _HomePageState extends State<HomePage>
               FavoritosPage()
             ]),
       drawer: DrawerList(),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: _onClickAdicionarCarro,
+      ),
     );
+  }
+
+  void _onClickAdicionarCarro() {
+    push(context, CarroFormPage());
   }
 }
