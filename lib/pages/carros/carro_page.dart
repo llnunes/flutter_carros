@@ -1,15 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carros/api/api_response.dart';
+import 'package:carros/api/carros_api.dart';
 import 'package:carros/api/loripsum_api.dart';
 import 'package:carros/model/carro.dart';
 import 'package:carros/pages/carros/carros_form_page.dart';
 import 'package:carros/service/favorito_service.dart';
+import 'package:carros/util/alert.dart';
 import 'package:carros/util/nav.dart';
 import 'package:carros/util/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CarroPage extends StatefulWidget {
-  Carro carro;
+  final Carro carro;
 
   CarroPage(this.carro);
 
@@ -163,6 +166,7 @@ class _CarroPageState extends State<CarroPage> {
         break;
       case "Deletar":
         print("deletar");
+        deletar();
         break;
       case "Share":
         print("share");
@@ -180,10 +184,24 @@ class _CarroPageState extends State<CarroPage> {
     });
   }
 
+
+  void deletar() async {
+    ApiResponse<bool> response = await CarrosApi.delete(carro);
+
+    if(response.ok) {
+      alert(context, "Alerta", "Carro deletado com sucesso", callback: () {
+        pop(context);
+      });
+    } else {
+      alert(context, "Problema", response.msg);
+    }
+  }
+
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
     _loripsumApiBloc.dispose();
   }
+
 }

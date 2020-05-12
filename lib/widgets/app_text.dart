@@ -40,9 +40,9 @@ class AppText extends StatelessWidget {
         fontSize: 25,
       ),
       obscureText: password,
-      inputFormatters: [
-        BlacklistingTextInputFormatter(RegExp("[ ]"))
-      ],
+//      inputFormatters: [
+//        BlacklistingTextInputFormatter(RegExp("[ ]"))
+//      ],
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
