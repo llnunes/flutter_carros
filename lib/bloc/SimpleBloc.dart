@@ -10,7 +10,7 @@ class SimpleBloc<T> {
     _streamController.add(object);
   }
 
-  void addError(T object) {
+  void addError(Error object) {
     if(! _streamController.isClosed) {
       _streamController.addError(object);
     }

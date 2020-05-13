@@ -3,6 +3,7 @@ import 'package:carros/model/carro.dart';
 import 'package:carros/pages/carros/carros_listview.dart';
 import 'package:carros/widgets/text_error.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class FavoritosPage extends StatefulWidget {
   @override
@@ -11,8 +12,6 @@ class FavoritosPage extends StatefulWidget {
 
 class _FavoritosPageState extends State<FavoritosPage>
     with AutomaticKeepAliveClientMixin<FavoritosPage> {
-  final _bloc = FavoritosBloc();
-
   @override
   bool get wantKeepAlive => true;
 
@@ -20,7 +19,8 @@ class _FavoritosPageState extends State<FavoritosPage>
   void initState() {
     // TODO: implement initState
     super.initState();
-    _bloc.fetch();
+
+    Provider.of<FavoritosBloc>(context, listen: false).fetch();
   }
 
   @override
@@ -28,7 +28,7 @@ class _FavoritosPageState extends State<FavoritosPage>
     super.build(context);
 
     return StreamBuilder(
-      stream: _bloc.stream,
+      stream: Provider.of<FavoritosBloc>(context).stream,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return TextError("Não foi possivel recuperar os carros");
@@ -48,12 +48,13 @@ class _FavoritosPageState extends State<FavoritosPage>
   }
 
   Future<void> _onRefresh() {
-    return _bloc.fetch();
+    return Provider.of<FavoritosBloc>(context).fetch();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    _bloc.dispose();
-  }
+// NÃO FAZ DISPOSE DE BLOC GLOBAL
+//  @override
+//  void dispose() {
+//    super.dispose();
+//    favoritosBloc.dispose();
+//  }
 }

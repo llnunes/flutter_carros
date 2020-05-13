@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carros/api/api_response.dart';
 import 'package:carros/api/carros_api.dart';
@@ -8,6 +10,7 @@ import 'package:carros/widgets/app_button.dart';
 import 'package:carros/widgets/app_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CarroFormPage extends StatefulWidget {
   final Carro carro;
@@ -28,6 +31,8 @@ class _CarroFormPageState extends State<CarroFormPage> {
   int _radioIndex = 0;
 
   var _showProgress = false;
+
+  File _file;
 
   Carro get carro => widget.carro;
 
@@ -105,7 +110,6 @@ class _CarroFormPageState extends State<CarroFormPage> {
             keyboardType: TextInputType.text,
             validator: _validateNome,
           ),
-
           AppButton(
             "Salvar",
             onPressed: _onClickSalvar,
@@ -117,14 +121,23 @@ class _CarroFormPageState extends State<CarroFormPage> {
   }
 
   _headerFoto() {
-    return carro != null
-        ? CachedNetworkImage(
-      imageUrl: carro.urlFoto ??
-          "http://www.livroandroid.com.br/livro/carros/classicos/Dodge_Challenger.png",
-    )
-        : Image.asset(
-      "assets/images/camera.png",
-      height: 150,
+    return InkWell(
+      onTap: _onClickFoto,
+      child: _file != null
+          ? Image.file(
+              _file,
+              height: 200,
+            )
+          : carro != null
+              ? CachedNetworkImage(
+                  imageUrl: carro.urlFoto ??
+                      "http://www.livroandroid.com.br/livro/carros/classicos/Dodge_Challenger.png",
+                  height: 100,
+                )
+              : Image.asset(
+                  "assets/images/camera.png",
+                  height: 150,
+                ),
     );
   }
 
@@ -210,9 +223,9 @@ class _CarroFormPageState extends State<CarroFormPage> {
 
     print("Salvar o carro $c");
 
-    ApiResponse<bool> response = await CarrosApi.save(c);
+    ApiResponse<bool> response = await CarrosApi.save(c, _file);
 
-    if(response.ok) {
+    if (response.ok) {
       alert(context, "Alerta", "Carro Salvo com sucesso", callback: () {
         pop(context);
       });
@@ -225,5 +238,13 @@ class _CarroFormPageState extends State<CarroFormPage> {
     });
 
     print("Fim.");
+  }
+
+  void _onClickFoto() async {
+    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+
+    setState(() {
+      this._file = image;
+    });
   }
 }
