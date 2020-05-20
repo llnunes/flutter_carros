@@ -1,7 +1,6 @@
-import 'package:carros/bloc/FavoritosBloc.dart';
 import 'package:carros/model/carro.dart';
 import 'package:carros/pages/carros/carros_listview.dart';
-import 'package:carros/widgets/text_error.dart';
+import 'package:carros/pages/favoritos/favoritos_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,35 +19,33 @@ class _FavoritosPageState extends State<FavoritosPage>
     // TODO: implement initState
     super.initState();
 
-    Provider.of<FavoritosBloc>(context, listen: false).fetch();
+    Provider.of<FavoritosModel>(context, listen: false).getCarros();
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    FavoritosModel model = Provider.of<FavoritosModel>(context);
 
-    return StreamBuilder(
-      stream: Provider.of<FavoritosBloc>(context).stream,
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return TextError("Não foi possivel recuperar os carros");
-        }
-        if (!snapshot.hasData) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-        List<Carro> carros = snapshot.data;
-        return RefreshIndicator(
-          onRefresh: _onRefresh,
-          child: CarrosListView(carros),
-        );
-      },
+    List<Carro> carros = model.carros;
+
+    if (carros.isEmpty) {
+      return Center(
+        child: Text(
+          "Nenhum favorito encontrado!",
+          style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+        ),
+      );
+    }
+
+    return RefreshIndicator(
+      onRefresh: _onRefresh,
+      child: CarrosListView(carros),
     );
   }
 
   Future<void> _onRefresh() {
-    return Provider.of<FavoritosBloc>(context).fetch();
+    return Provider.of<FavoritosModel>(context, listen: false).getCarros();
   }
 
 // NÃO FAZ DISPOSE DE BLOC GLOBAL
