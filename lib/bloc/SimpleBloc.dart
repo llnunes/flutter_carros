@@ -1,26 +1,25 @@
 import 'dart:async';
 
 class SimpleBloc<T> {
+  final _controller = StreamController<T>.broadcast();
 
-  final _streamController = new StreamController<T>();
-
-  Stream<T> get stream => _streamController.stream;
+  Stream<T> get stream => _controller.stream;
 
   void add(T object) {
-    _streamController.add(object);
+    if (!_controller.isClosed) {
+      _controller.add(object);
+    }
   }
 
-  void addError(Error object) {
-    if(! _streamController.isClosed) {
-      _streamController.addError(object);
+  void addError(Object error) {
+    if (!_controller.isClosed) {
+      _controller.addError(error);
     }
   }
 
   void dispose() {
-    _streamController.close();
+    _controller.close();
   }
 }
 
-class BooleanBloc extends SimpleBloc<bool> {
-
-}
+class BooleanBloc extends SimpleBloc<bool> {}

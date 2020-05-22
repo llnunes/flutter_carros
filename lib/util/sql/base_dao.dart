@@ -17,7 +17,7 @@ abstract class BaseDAO<T extends Entity> {
     var dbClient = await db;
     var id = await dbClient.insert(tableName, carro.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace);
-    print('id: $id');
+    //print('id: $id');
     return id;
   }
 
@@ -56,7 +56,7 @@ abstract class BaseDAO<T extends Entity> {
     final dbClient = await db;
     final list = await dbClient.rawQuery('select count(*) from $tableName');
 
-    print(dbClient.path);
+    //print(dbClient.path);
 
     return Sqflite.firstIntValue(list);
   }

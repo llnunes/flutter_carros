@@ -6,6 +6,7 @@ import 'package:carros/model/carro.dart';
 import 'package:carros/pages/carros/carros_form_page.dart';
 import 'package:carros/service/favorito_service.dart';
 import 'package:carros/util/alert.dart';
+import 'package:carros/util/event_bus.dart';
 import 'package:carros/util/nav.dart';
 import 'package:carros/util/text.dart';
 import 'package:flutter/cupertino.dart';
@@ -190,6 +191,7 @@ class _CarroPageState extends State<CarroPage> {
 
     if(response.ok) {
       alert(context, "Alerta", "Carro deletado com sucesso", callback: () {
+        EventBus.get(context).sendEvent(CarroEvent("carro_deletado", carro.tipo));
         pop(context);
       });
     } else {
